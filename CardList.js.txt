@@ -1,0 +1,45 @@
+// CardList.js
+
+import React, { useState, useEffect } from 'react';
+import { mockData } from './mockData';
+
+const CardList = ({ activeTab }) => {
+  const [cards, setCards] = useState([]);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    // Fetch and filter cards based on the active tab
+    const filteredCards = mockData.data.filter((card) => {
+      if (activeTab === 'your') {
+        // Filter by owner_id here
+        return card.owner_id === YOUR_OWNER_ID;
+      } else if (activeTab === 'all') {
+        return true;
+      } else if (activeTab === 'blocked') {
+        // Filter by card status (blocked) here
+        return card.status === 'blocked';
+      }
+      return false;
+    });
+
+    // Implement pagination
+    const startIndex = (page - 1) * mockData.per_page;
+    const endIndex = startIndex + mockData.per_page;
+    const paginatedData = filteredCards.slice(startIndex, endIndex);
+
+    setCards([...cards, ...paginatedData]);
+  }, [activeTab, page]);
+
+  // Implement infinite scrolling here
+
+  return (
+    <div className="card-list">
+      {cards.map((card) => (
+        // Render individual card components
+        <Card key={card.name} card={card} />
+      )}
+    </div>
+  );
+};
+
+export default CardList;
