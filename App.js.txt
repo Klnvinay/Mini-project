@@ -1,0 +1,21 @@
+// App.js
+import React, { useEffect, useState } from 'react';
+import Card from './Card';
+
+function App() {
+  const [cards, setCards] = useState([]);
+  // Fetch data from the API and set it to the 'cards' state
+
+  return (
+    <div className="App">
+      {/* Add Tabs, FilterDropdown, SearchBar components here */}
+      <div className="card-list">
+        {cards.map((card, index) => (
+          <Card key={index} card={card} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default App;
